@@ -21,7 +21,7 @@ weatherForm.addEventListener('submit', (e) => {
          } else {
             messageOne.textContent = data.location
             messageTwo.textContent = "It is currently " + Math.round(data.currentTemp) + "°F (feels like " + Math.round(data.feelsLike)
-               + "°F) with a " + data.currentPrecipProb + "% chance of precipitation.  The humidity is " + Math.round(data.humidity) + "%."
+               + "°F) with a " + Math.round(data.currentPrecipProb) + "% chance of precipitation.  The humidity is " + Math.round(data.humidity) + "%."
             messageThree.textContent = "The high temperature today is " + Math.round(data.tempHigh) + "°F and the low is " + Math.round(data.tempLow) + "°F."
             messageFour.textContent = data.summary
          }
