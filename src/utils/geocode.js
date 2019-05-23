@@ -1,5 +1,5 @@
 const request = require('request')
-require('dotenv').config()
+if(process.env.NODE_ENV !== 'production') { require('dotenv').config() }
 
 const geocode = (location, callback) => {
     const token = process.env.MAPBOX_KEY

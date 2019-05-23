@@ -1,5 +1,5 @@
 const request = require('request')
-require('dotenv').config()
+if(process.env.NODE_ENV !== 'production') { require('dotenv').config() }
 
 const forecast = ({ latitude, longitude }, callback) => {
    const token = process.env.DARKSKY_KEY
