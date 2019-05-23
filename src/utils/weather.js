@@ -20,7 +20,6 @@ const forecast = ({ latitude, longitude }, callback) => {
 
 const timeMachine = ({ latitude, longitude }, date, callback) => {
    const token = process.env.DARKSKY_KEY
-   console.log(token)
    const time = new Date(date).valueOf() / 1000
    const url = 'https://api.darksky.net/forecast/' + token + '/' + latitude + "," + longitude + "," + time
    console.log(url)

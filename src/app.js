@@ -7,12 +7,12 @@ const forecast = weather.forecast
 const timeMachine = weather.timeMachine
 
 const app = express()
+const port = process.env.PORT || 3000
 
 // Define paths for Express config
 const publicDirPath = path.join(__dirname, '..', 'public')
 const viewsPath = path.join(__dirname, '..', 'templates', 'views')
 const partialsPath = path.join(__dirname, '..', 'templates', 'partials')
-const port = process.env.PORT || 8080
 
 // Set up handlebars engine and views/partials location
 app.set('view engine', 'hbs')

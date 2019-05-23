@@ -3,7 +3,6 @@ if(process.env.NODE_ENV !== 'production') { require('dotenv').config() }
 
 const geocode = (location, callback) => {
     const token = process.env.MAPBOX_KEY
-    console.log(token)
     const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + encodeURIComponent(location) + '.json?access_token=' + token + '&limit=1'
     request({
         url,
