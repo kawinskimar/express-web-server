@@ -1,6 +1,10 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const geocode = require('./utils/geocode')
+const weather = require('./utils/weather')
+const forecast = weather.forecast
+const timeMachine = weather.timeMachine
 
 const app = express()
 
@@ -40,31 +44,42 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/forecast', (req, res) => {
-   res.send({
-      location: 'Meadville',
-      forecast: 'Cloudy with a chance of meatballs'
-   })
-})
-
-app.get('/products', (req, res) => {
-   if(!req.query.search) {
+   if(!req.query.address) {
       return res.send({
-         error: 'You must provide a search term'
+         error: 'You must provide an address'
       })
    }
-   console.log(req.query)
-   res.send({
-      products: []
+   geocode(req.query.address, (error, geoData = {}) => {
+      if(error) {
+         return res.send({ error })
+      }
+      forecast(geoData, (error, { currently, daily }) => {
+         if(error) {
+            return res.send({ error })
+         }
+         res.send({
+            location: geoData.place,
+            queryAddress: req.query.address,
+            currentTemp: currently.temperature,
+            currentPrecipProb: currently.precipProbability*100,
+            feelsLike: currently.apparentTemperature,
+            humidity: currently.humidity*100,
+            tempHigh: daily.data[0].temperatureHigh,
+            tempLow: daily.data[0].temperatureLow,
+            summary: daily.summary
+            
+         })
+      })
    })
 })
 
-app.get('/time-machine', (req, res) => {
-   res.send({
-      location: 'Meadville',
-      date: '05/18/2017',
-      forecast: 'Sunny with a high of 76F'
-   })
-})
+// app.get('/time-machine', (req, res) => {
+//    res.send({
+//       location: 'Meadville',
+//       date: '05/18/2017',
+//       forecast: 'Sunny with a high of 76F'
+//    })
+// })
 
 app.get('/help/*', (req, res) => {
    res.render('404', {
